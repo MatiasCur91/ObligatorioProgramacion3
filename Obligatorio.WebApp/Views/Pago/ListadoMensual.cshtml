@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Obligatorio.DTOs.DTOs.DTOsPago.DTOPago> 
+
+
+<h2>Listado mensual de pagos</h2>
+
+
+
+<form asp-action="ListadoMensual" method="post">
+   
+        <div class="form-group">
+            <label for="mes" class="form-label">Mes</label>
+            <select name="mes" id="mes" class="form-select" required>
+                <option value="">Seleccione un mes:</option>
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+
+            <label for="anio" class="form-label">Año</label>
+            <input type="number" name="anio" id="anio" class="form-control" min="2000" max="2100" required />
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+</form>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert">
+        @ViewBag.Msg
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Descripción</th>
+            <th>Método de pago</th>
+            <th>Tipo de gasto</th>
+            <th>Tipo de pago</th>
+            <th>Monto Total</th>
+            <th>Saldo oendiente</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var pago in Model)
+        {
+            <tr>
+                <td>@pago.NombreUsuario</td>
+                <td>@pago.UsuarioEmail</td>
+                <td>@pago.Descripcion</td>
+                <td>@pago.MetodoDePago</td>
+                <td>@pago.TipoGasto</td>
+                <td>@pago.TipoPago</td>
+                <td>@pago.MontoTotal</td>
+                <td>@pago.SaldoPendiente</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

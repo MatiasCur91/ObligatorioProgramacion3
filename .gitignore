@@ -1,0 +1,28 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.vscode/
+*.vsidx
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Rr]elease/
+[Dd]ebug/
+
+# Otros
+*.dbmdl
+*.pdb
+*.tmp
+*.userprefs
+*.env
+*.DS_Store
+Thumbs.db
+
+# Archivos de dependencias
+packages/
+node_modules/
+

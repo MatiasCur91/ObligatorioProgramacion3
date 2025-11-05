@@ -1,0 +1,32 @@
+﻿@using Obligatorio.DTOs.DTOs.DTOsUsuario
+@model List<DTOUsuario>
+
+<h2>Usuarios con pagos superiores al monto indicado</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No se encontraron usuarios con pagos superiores al monto indicado.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre completo</th>
+                <th>Email</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr>
+                    <td>@usuario.Nombre @usuario.Apellido</td>
+                    <td>@usuario.Email</td>
+                    <td>@usuario.Rol</td>
+                  
+                </tr>
+            }
+        </tbody>
+    </table>
+}
