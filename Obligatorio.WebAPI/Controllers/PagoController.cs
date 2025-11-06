@@ -79,5 +79,5 @@ namespace Obligatorio.WebAPI.Controllers
 
             }
         }
-    }// esta version tiene el alta pago sin terminar 
+    } // esta version tiene el alta pago sin terminar 
 }

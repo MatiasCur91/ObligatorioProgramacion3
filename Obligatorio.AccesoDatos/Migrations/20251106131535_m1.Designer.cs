@@ -12,7 +12,7 @@ using Obligatorio.AccesoDatos;
 namespace Obligatorio.AccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251019190347_m1")]
+    [Migration("20251106131535_m1")]
     partial class m1
     {
         /// <inheritdoc />
