@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Obligatorio.AccesoDatos;
 using Obligatorio.AccesoDatos.Repositorios;
 using Obligatorio.LogicaAplicacion.CasosUso.CUPago;
+using Obligatorio.LogicaAplicacion.CasosUso.CUUsuario;
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUPago;
+using Obligatorio.LogicaAplicacion.ICasosUso.ICUUsuario;
 using Obligatorio.LogicaNegocio.InterfacesRepositorios;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +26,7 @@ builder.Services.AddScoped<IRepositorioTipoGasto, RepositorioTipoGasto>();
 //Casos de uso
 builder.Services.AddScoped<ICUObtenerPagos, CUObtenerPagos>();
 builder.Services.AddScoped<ICUAltaPago, CUAltaPago>();
-
+builder.Services.AddScoped<ICULogin, CULogin>();
 
 
 
@@ -30,6 +35,28 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//JWT
+//La clave debe ser almacenada en el json, o en el sistema operativo cuando estéen producción.
+var clave = "UTzl^7yPl$5xrT6&{7RZCSG&O42MEK89$CW1XXRrN(>XqIp{W4s2S5$>KT$6CG!2M]'ZlrqH-t%eI4.X9W~u#qO+oX£+[?7QDAa";
+var claveCodificada = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clave));
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(opt =>
+{
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        //Definir las verificaciones a realizar
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = claveCodificada
+    };
+});
+
+
 
 var app = builder.Build();
 
@@ -43,6 +70,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 
