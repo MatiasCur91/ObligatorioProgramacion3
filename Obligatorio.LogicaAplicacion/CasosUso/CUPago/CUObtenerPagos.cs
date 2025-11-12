@@ -11,9 +11,9 @@ public class CUObtenerPagos : ICUObtenerPagos
 {
     private IRepositorioPago _repoPago;
 
-    public CUObtenerPagos(IRepositorioPago repoLibro)
+    public CUObtenerPagos(IRepositorioPago repoPago)
     {
-        _repoPago = repoLibro;
+        _repoPago = repoPago;
 
     }
     public List<DTOPago> ObtenerPagos()

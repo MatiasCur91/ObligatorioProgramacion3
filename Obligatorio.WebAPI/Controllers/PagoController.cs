@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Obligatorio.DTOs.DTOs.DTOsPago;
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUPago;
 using Obligatorio.LogicaNegocio.CustomExceptions.CECompartidos;
 using Obligatorio.LogicaNegocio.CustomExceptions.CEPago;
+using Obligatorio.LogicaNegocio.InterfacesRepositorios;
+using System.Security.Claims;
 
 namespace Obligatorio.WebAPI.Controllers
 {
@@ -12,12 +15,15 @@ namespace Obligatorio.WebAPI.Controllers
     {
         private ICUObtenerPagos _CUObtenerPagos;
         private ICUAltaPago _CUAltaPago;
+        private IRepositorioUsuario _repoUsuario;
+        private ICUObtenerPagosUsuario _cuObtenerPagosUsuario;
 
-        public PagoController(ICUObtenerPagos cuObtenerPagos, ICUAltaPago cuAltaPago)
+        public PagoController(ICUObtenerPagos cuObtenerPagos, ICUAltaPago cuAltaPago, IRepositorioUsuario repoUsuario, ICUObtenerPagosUsuario cuObtenerPagosUsuario)
         {
             _CUObtenerPagos = cuObtenerPagos;
             _CUAltaPago = cuAltaPago;
-
+            _cuObtenerPagosUsuario = cuObtenerPagosUsuario;
+            _repoUsuario = repoUsuario;
         }
         [HttpGet]
         public IActionResult GetPagos()
@@ -55,6 +61,39 @@ namespace Obligatorio.WebAPI.Controllers
             }
 
         }
+
+        [Authorize(Roles = "Empleado,Gerente")]
+        [HttpGet("usuario-pagos")]
+        public IActionResult ObtenerPagosUsuario()
+        {
+            try{
+
+                var email = User.FindFirst(ClaimTypes.Email)?.Value;
+                var usuario = _repoUsuario.FindByEmail(email);
+
+                var pagos = _cuObtenerPagosUsuario.Ejecutar(usuario.Id);
+
+                return Ok(pagos);
+
+
+            } catch (PagoNoEncontradoException e) 
+            {
+                return StatusCode(404, e.Message);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+
+        }
+
+
+
+
+
+
 
         [HttpPost]
         public IActionResult AltaPago(DTOAltaPago dto)

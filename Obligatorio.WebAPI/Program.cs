@@ -27,6 +27,7 @@ builder.Services.AddScoped<IRepositorioTipoGasto, RepositorioTipoGasto>();
 builder.Services.AddScoped<ICUObtenerPagos, CUObtenerPagos>();
 builder.Services.AddScoped<ICUAltaPago, CUAltaPago>();
 builder.Services.AddScoped<ICULogin, CULogin>();
+builder.Services.AddScoped<ICUObtenerPagosUsuario, CUObtenerPagosUsuario>();
 
 
 

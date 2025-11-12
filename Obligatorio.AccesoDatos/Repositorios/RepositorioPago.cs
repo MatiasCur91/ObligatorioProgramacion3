@@ -43,7 +43,7 @@ public class RepositorioPago : IRepositorioPago
 
    
 
-    public IEnumerable<Pago> FindByUsuario(int usuarioId)
+    public List<Pago> FindByUsuario(int usuarioId)
     {
         return _context.Pagos
             .Include(p => p.TipoGasto)
