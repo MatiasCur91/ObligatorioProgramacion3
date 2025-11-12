@@ -47,9 +47,11 @@ public class RepositorioUsuario : IRepositorioUsuario
         throw new NotImplementedException();
     }
 
-    public void Update(Usuario obj)
+    public void Update(Usuario usuario)
     {
-        throw new NotImplementedException();
+        _context.Usuarios.Update(usuario);
+        _context.SaveChanges();
+    
     }
 
 
