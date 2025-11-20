@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUEquipo;
+using Obligatorio.LogicaNegocio.CustomExceptions.CECompartidos;
+using Obligatorio.LogicaNegocio.CustomExceptions.CEEquipo;
 
 namespace Obligatorio.WebAPI.Controllers;
 
@@ -24,11 +26,15 @@ public class EquipoController : Controller
         try
         {
             var equipos = _cuEquipos.ObtenerEquiposConPagosUnicosMayores(monto);
-
-            if (!equipos.Any())
-                return NotFound("No se encontraron equipos con pagos únicos superiores a ese monto.");
-
             return Ok(equipos);
+        }
+        catch (NoExisteEquipoException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (DatosInvalidosException e)
+        {
+            return BadRequest(e.Message);
         }
         catch (Exception)
         {

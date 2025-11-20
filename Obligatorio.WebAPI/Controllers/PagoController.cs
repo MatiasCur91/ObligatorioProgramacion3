@@ -73,9 +73,9 @@ namespace Obligatorio.WebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-            catch (UsuarioNoEncontradoException)
+            catch (UsuarioNoEncontradoException e)
             {
-                return NotFound("Usuario no encontrado.");
+                return NotFound(e.Message);
             }
             catch (Exception e)
             {

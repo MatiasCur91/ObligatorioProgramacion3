@@ -1,4 +1,6 @@
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUEquipo;
+using Obligatorio.LogicaNegocio.CustomExceptions.CEEquipo;
+using Obligatorio.LogicaNegocio.CustomExceptions.CELogin;
 using Obligatorio.LogicaNegocio.Entidades;
 using Obligatorio.LogicaNegocio.InterfacesRepositorios;
 
@@ -16,7 +18,15 @@ public class CUObtenerEquiposPagosUnicosMayores : ICUObtenerEquiposPagosUnicosMa
     public List<Equipo> ObtenerEquiposConPagosUnicosMayores(double monto)
     {
         if (monto <= 0)
-            throw new ArgumentException("El monto debe ser mayor que cero.");
+        {
+            throw new DatosInvalidosException("El monto debe ser mayor que cero."); 
+        }
+        var equipos = _repoEquipo.ObtenerEquiposConPagosUnicosMayores(monto);
+        if (equipos == null || !equipos.Any() )
+        {
+            throw new NoExisteEquipoException("No hay equipos con pago unico mayor a ese monto.");
+        }
+
 
         return _repoEquipo.ObtenerEquiposConPagosUnicosMayores(monto);
     }
