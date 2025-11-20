@@ -21,4 +21,9 @@
       <ProjectReference Include="..\Obligatorio.Utilidades\Obligatorio.Utilidades.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="CasosUso\CUAuditoria\" />
+      <Folder Include="ICasosUso\ICUAuditoria\" />
+    </ItemGroup>
+
 </Project>

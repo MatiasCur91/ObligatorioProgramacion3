@@ -9,10 +9,12 @@ using Obligatorio.LogicaAplicacion.ICasosUso.ICUPago;
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUUsuario;
 using Obligatorio.LogicaNegocio.InterfacesRepositorios;
 using System.Text;
+using Obligatorio.LogicaAplicacion.CasosUso.CUTipoGasto;
+using Obligatorio.LogicaAplicacion.ICasosUso.ICUEquipo;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");//DefaultConnection debe coincidir con el nombre designado en el JSON.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
@@ -21,12 +23,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<IRepositorioPago, RepositorioPago>();
 builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 builder.Services.AddScoped<IRepositorioTipoGasto, RepositorioTipoGasto>();
+builder.Services.AddScoped<IRepositorioEquipo, RepositorioEquipo>();
+
 
 
 //Casos de uso
 builder.Services.AddScoped<ICUObtenerPagos, CUObtenerPagos>();
 builder.Services.AddScoped<ICUAltaPago, CUAltaPago>();
 builder.Services.AddScoped<ICULogin, CULogin>();
+builder.Services.AddScoped<ICUObtenerEquiposPagosUnicosMayores, CUObtenerEquiposPagosUnicosMayores>();
+
 
 
 
@@ -37,8 +43,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //JWT
-//La clave debe ser almacenada en el json, o en el sistema operativo cuando estéen producción.
-var clave = "UTzl^7yPl$5xrT6&{7RZCSG&O42MEK89$CW1XXRrN(>XqIp{W4s2S5$>KT$6CG!2M]'ZlrqH-t%eI4.X9W~u#qO+oX£+[?7QDAa";
+//La clave debe ser almacenada en el json, o en el sistema operativo cuando estï¿½en producciï¿½n.
+var clave = "UTzl^7yPl$5xrT6&{7RZCSG&O42MEK89$CW1XXRrN(>XqIp{W4s2S5$>KT$6CG!2M]'ZlrqH-t%eI4.X9W~u#qO+oXï¿½+[?7QDAa";
 var claveCodificada = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clave));
 
 

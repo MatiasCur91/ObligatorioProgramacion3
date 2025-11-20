@@ -22,5 +22,7 @@ namespace Obligatorio.AccesoDatos.Repositorios
             _context.Auditorias.Add(auditoria);
             _context.SaveChanges();
         }
+        
+        
     }
 }

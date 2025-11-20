@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Obligatorio.DTOs.DTOs.DTOsPago;
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUPago;
 using Obligatorio.LogicaNegocio.CustomExceptions.CECompartidos;
@@ -10,74 +12,75 @@ namespace Obligatorio.WebAPI.Controllers
     [ApiController]
     public class PagoController : ControllerBase
     {
-        private ICUObtenerPagos _CUObtenerPagos;
-        private ICUAltaPago _CUAltaPago;
+        private readonly ICUObtenerPagos _CUObtenerPagos;
+        private readonly ICUAltaPago _CUAltaPago;
 
         public PagoController(ICUObtenerPagos cuObtenerPagos, ICUAltaPago cuAltaPago)
         {
             _CUObtenerPagos = cuObtenerPagos;
             _CUAltaPago = cuAltaPago;
-
         }
+
         [HttpGet]
         public IActionResult GetPagos()
         {
-
             try
             {
-                List<DTOPago> dto = _CUObtenerPagos.ObtenerPagos();
+                var dto = _CUObtenerPagos.ObtenerPagos();
                 return Ok(dto);
             }
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
-
             }
-
         }
 
         [HttpGet("{id}")]
         public IActionResult GetPago(int id)
         {
-
             try
             {
-                DTOPago p = _CUObtenerPagos.ObtenerPago(id);
+                var p = _CUObtenerPagos.ObtenerPago(id);
                 return Ok(p);
             }
-            catch (PagoNoEncontradoException e)
+            catch (PagoNoEncontradoException)
             {
                 return NotFound();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
-
         }
 
         [HttpPost]
-        public IActionResult AltaPago(DTOAltaPago dto)
+        [Authorize]
+        public IActionResult AltaPago([FromBody] DTOAltaPago dto)
         {
-
             try
             {
-                string mailPrueba = "juaper@laempresa.com";
-                _CUAltaPago.AltaPago(dto, mailPrueba);
-                return StatusCode(204);
+
+                var email = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                if (string.IsNullOrEmpty(email))
+                    return Unauthorized("No se pudo obtener el email del token.");
+
+                _CUAltaPago.AltaPago(dto, email);
+
+                return StatusCode(201); 
             }
             catch (DatosInvalidosException e)
             {
-
                 return BadRequest(e.Message);
             }
-            
-            catch (UsuarioNoEncontradoException e)
+            catch (UsuarioNoEncontradoException)
             {
-
-                return NotFound();
-
+                return NotFound("Usuario no encontrado.");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
-    } // esta version tiene el alta pago sin terminar 
+    }
 }
