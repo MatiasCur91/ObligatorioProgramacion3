@@ -21,6 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<IRepositorioPago, RepositorioPago>();
 builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
 builder.Services.AddScoped<IRepositorioTipoGasto, RepositorioTipoGasto>();
+builder.Services.AddScoped<IRepositorioEquipo, RepositorioEquipo>();
+builder.Services.AddScoped<IRepositorioAuditoria, RepositorioAuditoria>();
 
 
 //Casos de uso
@@ -29,7 +31,8 @@ builder.Services.AddScoped<ICUAltaPago, CUAltaPago>();
 builder.Services.AddScoped<ICULogin, CULogin>();
 builder.Services.AddScoped<ICUObtenerPagosUsuario, CUObtenerPagosUsuario>();
 builder.Services.AddScoped<ICUGenerarPasswordAleatoria, CUGenerarPasswordAleatoria>();
-
+builder.Services.AddScoped<ICUObtenerUsuarioPorEmail, CUObtenerUsuarioPorEmail>();
+builder.Services.AddScoped<ICUUpdateUsuario, CUUpdateUsuario>();
 
 // Add services to the container.
 builder.Services.AddControllers();
