@@ -1,4 +1,8 @@
-﻿using Obligatorio.LogicaNegocio.Entidades;
+﻿using Obligatorio.LogicaAplicacion.ICasosUso.ICUTipoGasto;
+using Obligatorio.LogicaNegocio.CustomExceptions.CECompartidos;
+using Obligatorio.LogicaNegocio.CustomExceptions.CEEquipo;
+using Obligatorio.LogicaNegocio.Entidades;
+using Obligatorio.LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
