@@ -63,12 +63,11 @@ namespace Obligatorio.WebAPI.Controllers
         }
 
         [Authorize(Roles = "Empleado,Gerente")]
-        [HttpGet("usuario-pagos")]
-        public IActionResult ObtenerPagosUsuario()
+        [HttpGet("usuario-pagos/{email}")]
+        public IActionResult ObtenerPagosUsuario(string email)
         {
             try{
 
-                var email = User.FindFirst(ClaimTypes.Email)?.Value;
                 var usuario = _repoUsuario.FindByEmail(email);
 
                 var pagos = _cuObtenerPagosUsuario.Ejecutar(usuario.Id);

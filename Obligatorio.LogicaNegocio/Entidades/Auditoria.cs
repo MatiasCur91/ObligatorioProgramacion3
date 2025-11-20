@@ -9,8 +9,12 @@ namespace Obligatorio.LogicaNegocio.Entidades
     public class Auditoria
     {
         public int Id { get; set; }
-        public string Accion { get; set; }
-        public string Usuario { get; set; }
+
+        public string? Entidad { get; set; }
+
+        public int? IdEntidad { get; set; }
+        public string? Accion { get; set; }
+        public string? Usuario { get; set; }
         public DateTime Fecha { get; set; }
 
         public Auditoria()

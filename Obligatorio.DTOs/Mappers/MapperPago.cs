@@ -67,7 +67,7 @@ public class MapperPago
         dto.Id = p.Id;
         dto.MontoTotal = p.MontoTotal;
         dto.FechaPago = p.FechaPago;
-        dto.UsuarioEmail = p.Usuario.Email;
+    //    dto.UsuarioEmail = p.Usuario.Email;
         dto.TipoGasto = p.TipoGasto.Nombre;
 
 
