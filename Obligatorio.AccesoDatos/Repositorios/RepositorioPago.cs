@@ -41,12 +41,13 @@ public class RepositorioPago : IRepositorioPago
             .FirstOrDefault(p => p.Id == id);
     }
 
-   
+
 
     public List<Pago> FindByUsuario(int usuarioId)
     {
         return _context.Pagos
             .Include(p => p.TipoGasto)
+            .Include(p => p.Usuario)              
             .Where(p => p.Usuario.Id == usuarioId)
             .ToList();
     }
