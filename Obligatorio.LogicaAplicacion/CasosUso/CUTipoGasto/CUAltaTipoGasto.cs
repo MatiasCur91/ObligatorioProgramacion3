@@ -24,18 +24,18 @@ namespace Obligatorio.LogicaAplicacion.CasosUso.CUTiposDePago
 
         public void AltaTipoGasto(DTOAltaTipoGasto dto)
         {
-            // 1️. Crear la entidad desde el DTO
+            
             TipoGasto nuevo = MapperTipoGasto.FromDtoAltaTipoGasto(dto);
 
-            // 2️. Guardar en el repositorio
             _repoTipoGasto.Add(nuevo);
 
-            // 3️. Registrar en la auditoría
             _repoAuditoria.Add(new Auditoria
             {
                 Fecha = DateTime.Now,
                 Accion = $"Alta de tipo de gasto '{nuevo.Nombre}'",
-                Usuario = dto.UsuarioAdministrador // este dato viene desde el controlador (el admin logueado)
+                Usuario = dto.UsuarioAdministrador, 
+                Entidad = "Tipo de Gasto",
+                IdEntidad = nuevo.Id
             });
         }
     }

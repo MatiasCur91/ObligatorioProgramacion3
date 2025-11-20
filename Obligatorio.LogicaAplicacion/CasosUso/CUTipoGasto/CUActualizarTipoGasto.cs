@@ -37,7 +37,9 @@ namespace Obligatorio.LogicaAplicacion.CasosUso.CUTipoGasto
             {
                 Fecha = DateTime.Now,
                 Accion = $"Actualización de tipo de gasto '{buscado.Nombre}'",
-                Usuario = dto.UsuarioAdministrador
+                Usuario = dto.UsuarioAdministrador,
+                Entidad = "Tipo de gasto",
+                IdEntidad = dto.Id
             });
         }
     }

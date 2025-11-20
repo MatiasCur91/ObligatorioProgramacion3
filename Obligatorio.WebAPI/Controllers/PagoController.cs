@@ -66,7 +66,8 @@ namespace Obligatorio.WebAPI.Controllers
         [HttpGet("usuario-pagos/{email}")]
         public IActionResult ObtenerPagosUsuario(string email)
         {
-            try{
+            try
+            {
 
                 var usuario = _repoUsuario.FindByEmail(email);
 
@@ -75,7 +76,8 @@ namespace Obligatorio.WebAPI.Controllers
                 return Ok(pagos);
 
 
-            } catch (PagoNoEncontradoException e) 
+            }
+            catch (PagoNoEncontradoException e)
             {
                 return StatusCode(404, e.Message);
 
@@ -89,33 +91,34 @@ namespace Obligatorio.WebAPI.Controllers
         }
 
 
-
-
-
-
-
         [HttpPost]
-        public IActionResult AltaPago(DTOAltaPago dto)
+        [Authorize]
+        public IActionResult AltaPago([FromBody] DTOAltaPago dto)
         {
-
             try
             {
-                string mailPrueba = "juaper@laempresa.com";
-                _CUAltaPago.AltaPago(dto, mailPrueba);
-                return StatusCode(204);
+
+                var email = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                if (string.IsNullOrEmpty(email))
+                    return Unauthorized("No se pudo obtener el email del token.");
+
+                _CUAltaPago.AltaPago(dto, email);
+
+                return StatusCode(201);
             }
             catch (DatosInvalidosException e)
             {
-
                 return BadRequest(e.Message);
             }
-            
             catch (UsuarioNoEncontradoException e)
             {
-
-                return NotFound();
-
+                return NotFound(e.Message);
             }
-        }
-    } // esta version tiene el alta pago sin terminar 
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        } // esta version tiene el alta pago sin terminar 
+    }
 }

@@ -35,12 +35,14 @@ namespace Obligatorio.LogicaAplicacion.CasosUso.CUTipoGasto
             
             _repoTipoGasto.Remove(dto.Id);
 
-            
+
             _repoAuditoria.Add(new Auditoria
             {
                 Fecha = DateTime.Now,
                 Accion = $"Baja de tipo de gasto '{tipo.Nombre}'",
-                Usuario = dto.UsuarioAdministrador
+                Usuario = dto.UsuarioAdministrador,
+                Entidad = "Tipo de gasto",
+                IdEntidad = dto.Id
             });
         }
     }
