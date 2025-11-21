@@ -22,5 +22,14 @@ namespace Obligatorio.AccesoDatos.Repositorios
             _context.Auditorias.Add(auditoria);
             _context.SaveChanges();
         }
+        
+        public IEnumerable<Auditoria> ObtenerPorTipoGasto(int idTipoGasto)
+        {
+            return _context.Auditorias
+                .Where(a => a.Entidad == "TipoGasto" &&
+                            a.IdEntidad == idTipoGasto)
+                .OrderByDescending(a => a.Fecha)
+                .ToList();
+        }
     }
 }

@@ -90,18 +90,17 @@ namespace Obligatorio.WebAPI.Controllers
 
         }
 
-
+        [Authorize(Roles = "Empleado,Gerente, Administrador")]
         [HttpPost]
-        [Authorize]
+
         public IActionResult AltaPago([FromBody] DTOAltaPago dto)
         {
             try
             {
-
                 var email = User.FindFirst(ClaimTypes.Email)?.Value;
 
                 if (string.IsNullOrEmpty(email))
-                    return Unauthorized("No se pudo obtener el email del token.");
+                    return Unauthorized("El token no contiene email.");
 
                 _CUAltaPago.AltaPago(dto, email);
 
@@ -119,6 +118,6 @@ namespace Obligatorio.WebAPI.Controllers
             {
                 return StatusCode(500, e.Message);
             }
-        } // esta version tiene el alta pago sin terminar 
+        }
     }
 }

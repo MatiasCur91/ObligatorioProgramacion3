@@ -10,5 +10,7 @@ namespace Obligatorio.LogicaNegocio.InterfacesRepositorios
     public interface IRepositorioAuditoria
     {
         void Add(Auditoria auditoria);
+        IEnumerable<Auditoria> ObtenerPorTipoGasto(int idTipoGasto);
+
     }
 }
