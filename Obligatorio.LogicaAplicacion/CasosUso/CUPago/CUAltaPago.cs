@@ -26,26 +26,21 @@ namespace Obligatorio.LogicaAplicacion.CasosUso.CUPago
 
         public void AltaPago(DTOAltaPago dto, string emailUsuario)
         {
-            try
-            {
-                var usuario = _repoUsuario.FindByEmail(emailUsuario);
-                if (usuario == null)
-                    throw new UsuarioNoEncontradoException("Usuario no encontrado.");
+            var usuario = _repoUsuario.FindByEmail(emailUsuario);
+            if (usuario == null)
+                throw new UsuarioNoEncontradoException("Usuario no encontrado.");
 
-               
-                var pago = MapperPago.FromDTOAltaPagoToPago(dto);
-                pago.Usuario = usuario;
-                pago.TipoGasto = _repoTipoGasto.FindById(dto.IdTipoGasto);
-                pago.Validar();
-             
-                _repoPago.Add(pago);
+            var tipo = _repoTipoGasto.FindById(dto.IdTipoGasto);
+            if (tipo == null)
+                throw new DatosInvalidosException("Tipo de gasto no encontrado.");
 
+            var pago = MapperPago.FromDTOAltaPagoToPago(dto);
+            pago.Usuario = usuario;
+            pago.TipoGasto = tipo;
 
-            }
-            catch (Exception e)
-            {
-                throw new Exception("No se pudo registrar");
-            }
+            pago.Validar();
+
+            _repoPago.Add(pago);
             }
 
 

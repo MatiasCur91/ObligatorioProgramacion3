@@ -34,7 +34,7 @@ namespace Obligatorio.LogicaAplicacion.CasosUso.CUTiposDePago
                 Fecha = DateTime.Now,
                 Accion = $"Alta de tipo de gasto '{nuevo.Nombre}'",
                 Usuario = dto.UsuarioAdministrador, 
-                Entidad = "Tipo de Gasto",
+                Entidad = "TipoGasto",
                 IdEntidad = nuevo.Id
             });
         }

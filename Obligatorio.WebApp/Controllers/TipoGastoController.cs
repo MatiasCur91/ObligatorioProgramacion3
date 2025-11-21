@@ -48,8 +48,7 @@ namespace Obligatorio.WebApp.Controllers
             try
             {
                 
-                dto.UsuarioAdministrador = HttpContext.Session.GetString("LogueadoEmail");
-
+                dto.UsuarioAdministrador = "juaper@laEmpresa.com";
                 _cuAltaTipoGasto.AltaTipoGasto(dto);
 
                 TempData["Msg"] = "Tipo de gasto creado correctamente";
