@@ -20,9 +20,9 @@ public class MapperPago
                 recurrente.MetodoPago = MetodoDePago.Credito;
             }
 
-            recurrente.FechaInicio = dto.FechaInicio;
-            recurrente.FechaFin = dto.FechaFin;
-            recurrente.FechaPago = dto.FechaInicio;
+            recurrente.FechaInicio = (DateTime)dto.FechaInicio;
+            recurrente.FechaFin = (DateTime)dto.FechaFin;
+            recurrente.FechaPago = (DateTime)dto.FechaInicio;
             recurrente.Descripcion = dto.Descripcion;
             recurrente.TipoGastoID = dto.IdTipoGasto;
             recurrente.MontoPago = dto.Monto;
@@ -48,8 +48,8 @@ public class MapperPago
             }
             unico.TipoGastoID = dto.IdTipoGasto;
             unico.Descripcion = dto.Descripcion;
-            unico.FechaPago = dto.FechaPago;
-            unico.NumeroRecibo = dto.NumeroRecibo;
+            unico.FechaPago = (DateTime)dto.FechaPago;
+            unico.NumeroRecibo = (int)dto.NumeroRecibo;
             unico.MontoTotal = dto.Monto;
 
             return unico;

@@ -9,6 +9,8 @@ using Obligatorio.LogicaAplicacion.ICasosUso.ICUPago;
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUUsuario;
 using Obligatorio.LogicaNegocio.InterfacesRepositorios;
 using System.Text;
+using Obligatorio.LogicaAplicacion.CasosUso.CUTipoGasto;
+using Obligatorio.LogicaAplicacion.ICasosUso.ICUTipoGasto;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,10 @@ builder.Services.AddScoped<ICUObtenerPagosUsuario, CUObtenerPagosUsuario>();
 builder.Services.AddScoped<ICUGenerarPasswordAleatoria, CUGenerarPasswordAleatoria>();
 builder.Services.AddScoped<ICUObtenerUsuarioPorEmail, CUObtenerUsuarioPorEmail>();
 builder.Services.AddScoped<ICUUpdateUsuario, CUUpdateUsuario>();
+builder.Services.AddScoped<ICUObtenerEquiposPagosUnicosMayores, CUObtenerEquiposPagosUnicosMayores>();
+builder.Services.AddScoped<ICUListarTipoGasto, CUListarTipoGasto>();
+
+
 
 // Add services to the container.
 builder.Services.AddControllers();
