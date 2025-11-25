@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Obligatorio.DTOs.DTOs.DTOsPago;
 using Obligatorio.LogicaAplicacion.ICasosUso.ICUPago;
+using Obligatorio.LogicaAplicacion.ICasosUso.ICUUsuario;
 using Obligatorio.LogicaNegocio.CustomExceptions.CECompartidos;
 using Obligatorio.LogicaNegocio.CustomExceptions.CEPago;
 using Obligatorio.LogicaNegocio.InterfacesRepositorios;
@@ -15,15 +16,15 @@ namespace Obligatorio.WebAPI.Controllers
     {
         private ICUObtenerPagos _CUObtenerPagos;
         private ICUAltaPago _CUAltaPago;
-        private IRepositorioUsuario _repoUsuario;
         private ICUObtenerPagosUsuario _cuObtenerPagosUsuario;
+        private ICUObtenerUsuarioPorEmail _cUObtenerUsuarioPorEmail;
 
-        public PagoController(ICUObtenerPagos cuObtenerPagos, ICUAltaPago cuAltaPago, IRepositorioUsuario repoUsuario, ICUObtenerPagosUsuario cuObtenerPagosUsuario)
+        public PagoController(ICUObtenerPagos cuObtenerPagos, ICUAltaPago cuAltaPago, ICUObtenerPagosUsuario cuObtenerPagosUsuario, ICUObtenerUsuarioPorEmail cUObtenerUsuarioPorEmail)
         {
             _CUObtenerPagos = cuObtenerPagos;
             _CUAltaPago = cuAltaPago;
             _cuObtenerPagosUsuario = cuObtenerPagosUsuario;
-            _repoUsuario = repoUsuario;
+            _cUObtenerUsuarioPorEmail = cUObtenerUsuarioPorEmail;
         }
         [HttpGet]
         public IActionResult GetPagos()
@@ -68,8 +69,8 @@ namespace Obligatorio.WebAPI.Controllers
         {
             try
             {
-
-                var usuario = _repoUsuario.FindByEmail(email);
+                //caso de uso obtener usuario por mail
+                var usuario = _cUObtenerUsuarioPorEmail.Ejecutar(email);
 
                 var pagos = _cuObtenerPagosUsuario.Ejecutar(usuario.Id);
 

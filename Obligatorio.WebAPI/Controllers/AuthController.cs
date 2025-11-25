@@ -27,8 +27,6 @@ namespace Obligatorio.WebAPI.Controllers
             {
                 DTOUsuario u = _CuLogin.VerificarExistencia(dto);
 
-                //Si la encuentro, tenemos que generar el token y retornarlo.
-
                 var clave = "UTzl^7yPl$5xrT6&{7RZCSG&O42MEK89$CW1XXRrN(>XqIp{W4s2S5$>KT$6CG!2M]'ZlrqH-t%eI4.X9W~u#qO+oX£+[?7QDAa";
 
                 var claveCodificada = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clave));
